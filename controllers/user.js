@@ -2,6 +2,7 @@
 
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const schema = Joi.object().keys({
@@ -44,10 +45,47 @@ const signUp = async (req, res, next) => {
   });
 };
 
-const login = (req, res) => {
-  console.log('login!');
-  res.json({
-    message: 'login method',
+const loginError = (res, next) => {
+  res.status(401);
+  const error = new Error('Unable to login');
+  next(error);
+};
+
+const generateToken = (user, res, next) => {
+  const payload = {
+    id: user.id,
+    username: user.username,
+  };
+
+  jwt.sign(
+    payload,
+    process.env.TOKEN_SECRET,
+    { algorithm: 'HS256', expiresIn: '4h' },
+    (err, token) => {
+      if (err) return loginError(res, next);
+
+      res.cookie('jwt', token, {
+        secure: true,
+        httpOnly: true,
+        expiresIn: new Date(Date.now() + 14400),
+      });
+
+      return res.json({ message: 'Logged in' });
+    }
+  );
+};
+
+const login = async (req, res, next) => {
+  const user = await User.findOne({ username: req.body.username }).exec();
+
+  if (!user) return loginError(res, next);
+
+  bcrypt.compare(req.body.password, user.password).then((result) => {
+    if (result) {
+      return generateToken(user, res, next);
+    } else {
+      return loginError(res, next);
+    }
   });
 };
 
