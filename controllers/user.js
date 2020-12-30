@@ -38,7 +38,7 @@ const signUp = async (req, res, next) => {
       if (err) return next(err);
 
       res.json({
-        message: 'new user',
+        message: 'Created new user',
         user: doc,
       });
     });
@@ -65,12 +65,12 @@ const generateToken = (user, res, next) => {
       if (err) return loginError(res, next);
 
       res.cookie('jwt', token, {
-        secure: true,
         httpOnly: true,
+        secure: process.env.NODE_ENV !== 'development',
         expiresIn: new Date(Date.now() + 14400),
       });
 
-      return res.json({ message: 'Logged in' });
+      return res.json({ message: 'Logged in', user: payload });
     }
   );
 };

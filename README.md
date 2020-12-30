@@ -20,10 +20,14 @@ Just a small project to play about with express.
 - [ ] Authentication middleware
   - [ ] Check for valid JWT
   - [ ] If valid pass request to requested route
-- [ ] Create basic routes for adding and deleting todo items
+- [ ] Create basic routes for adding and deleting todo items (to test auth)
 
 ## Extra Stuff
 
 - [ ] Look into Heroku vs AWS
 - [ ] Dockerize
-- [ ] Require a CSRF token? [Useful stackoveflow link](https://stackoverflow.com/questions/47374272/jwt-token-and-csrf)
+- [ ] Require a CSRF token? Where/How should that be stored? [Useful stackoveflow link](https://stackoverflow.com/questions/47374272/jwt-token-and-csrf)
+- [ ] Logout endpoint to clear the cookie and add token to a blacklist (not really required)
+- [ ] Refreshing a token when its about to expire
+
+<https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/#login_usage>
