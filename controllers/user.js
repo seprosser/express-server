@@ -70,7 +70,7 @@ const generateToken = (user, res, next) => {
         expiresIn: new Date(Date.now() + 14400),
       });
 
-      return res.json({ message: 'Logged in', user: payload });
+      return res.json({ message: 'Logged in' });
     }
   );
 };

@@ -17,15 +17,16 @@ Just a small project to play about with express.
   - [x] Validate that the user exists
   - [x] Validate the provided user password (bcrypt compare)
   - [x] Create a 'secure', 'httpOnly' cookie containing the JWT
-- [ ] Authentication middleware
-  - [ ] Check for valid JWT
-  - [ ] If valid pass request to requested route
-- [ ] Create basic routes for adding and deleting todo items (to test auth)
+- [x] Authentication middleware
+  - [x] Check for valid JWT
+  - [x] Append user from JWT to request so that it can be used in the next middleware
+- [ ] Create basic (protected) routes for adding and deleting todo items (to test auth)
+- [ ] (Refactor) Move error handlers into separate middleware functions
 
 ## Extra Stuff
 
 - [ ] Look into Heroku vs AWS
-- [ ] Dockerize
+- [x] Dockerize
 - [ ] Require a CSRF token? Where/How should that be stored? [Useful stackoveflow link](https://stackoverflow.com/questions/47374272/jwt-token-and-csrf)
 - [ ] Logout endpoint to clear the cookie and add token to a blacklist (not really required)
 - [ ] Refreshing a token when its about to expire

@@ -1,15 +1,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 require('dotenv').config();
 require('./database/connection');
 
+app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors({ origin: process.env.ALLOWED_ORIGIN }));
-app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.json({
